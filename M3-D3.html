@@ -197,7 +197,7 @@
           </p>
           <p>
             <a id="loadButton" href="#" class="btn btn-primary my-2">Load Images</a>
-            <a href="#" class="btn btn-secondary my-2">Load Secondary Images</a>
+            <a id="secondButton" href="#" class="btn btn-secondary my-2">Load Secondary Images</a>
           </p>
         </div>
       </section>
@@ -229,7 +229,7 @@
 
 // All requests made with the client will be authenticated
 
-    fetch("https://api.pexels.com/v1/search?query=tiger", {
+    fetch("https://api.pexels.com/v1/search?query=dog", {
 	  "method": "GET",
 	  "headers": 
     {"Authorization":"563492ad6f917000010000019724ba4bb68342d397488fe1dbfe6b00"}
@@ -245,12 +245,78 @@
     console.error(err);
   });
 
+    fetch("https://api.pexels.com/v1/search?query=tiger", {
+	  "method": "GET",
+	  "headers": 
+    {"Authorization":"563492ad6f917000010000019724ba4bb68342d397488fe1dbfe6b00"}
+  })
+  .then(response =>{
+        return  response.json()
+  })
+  .then(ourdata =>  { 
+      newfunction2(ourdata) 
+      console.log(ourdata.photos)
+  } )
+  .catch(err => {
+    console.error(err);
+  });
+
   let newfunction = function (a) {
     let loadImages = document.querySelector("#loadButton")
+    let loadSecondImages = document.querySelector("#secondButton")
 
     let row = document.querySelector("#targetId")
 
-   loadImages.addEventListener("click", function() {
+    loadImages.addEventListener("click", function() {
+    
+    for (let images of a.photos) {
+      console.log(images.src.tiny)
+
+      row.innerHTML +=  `
+        <div class="col-md-4">
+                  <div class="card mb-4 shadow-sm">
+                    <img src="${images.src.tiny}" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <p class="card-text">
+                        This is a wider card with supporting text below as a natural
+                        lead-in to additional content. This content is a little bit
+                        longer.
+                      </p>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <div class="btn-group">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                          >
+                            View
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                          >
+                            Edit
+                          </button>
+                        </div>
+                        <small class="text-muted">9 mins</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `
+     }
+
+    })
+
+  }
+  let newfunction2 = function (a) {
+   
+    let loadSecondImages = document.querySelector("#secondButton")
+
+    let row = document.querySelector("#targetId")
+
+    loadSecondImages.addEventListener("click", function() {
     
     for (let images of a.photos) {
       console.log(images.src.tiny)
